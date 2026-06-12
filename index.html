@@ -141,8 +141,16 @@ img{max-width:100%;display:block}
 .nb-phone{font-size:.8rem;font-weight:700;color:#60A5FA;display:flex;align-items:center;gap:6px;padding:8px 13px;border-radius:10px;border:1px solid rgba(96,165,250,.3);transition:all .2s;white-space:nowrap;background:rgba(96,165,250,.07)}
 .nb-phone:hover{border-color:#60A5FA;color:#93C5FD;box-shadow:0 0 16px rgba(96,165,250,.3)}
 .nb-phone svg{stroke:#60A5FA;fill:none;stroke-width:2.5}
-@media(max-width:560px){.nb-phone{padding:8px 10px;}.nb-phone-num{display:none;}}
 .nb-btn{font-size:.77rem;padding:9px 16px;border-radius:10px}
+.nb-cta-row{display:flex;align-items:center;gap:8px}
+@media(max-width:560px){.nb-phone{padding:8px 10px;}.nb-phone-num{display:none;}}
+@media(max-width:640px){
+  .nb-inner{flex-wrap:wrap}
+  .nb-brochure-btn{display:none}
+  .nb-right{flex:1;justify-content:flex-end}
+  .nb-cta-row{flex-basis:100%;justify-content:center;margin-top:8px;gap:10px}
+  .nb-cta-row .nb-btn{flex:1;text-align:center;font-size:.75rem;padding:9px 12px}
+}
 
 /* ── STICKY WA ── */
 .sticky-wa{position:fixed;bottom:90px;right:18px;z-index:300;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#128C7E,#25D366);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(37,211,102,0.5),0 4px 16px rgba(0,0,0,.3);transition:transform .2s,box-shadow .2s}
@@ -742,40 +750,6 @@ img{max-width:100%;display:block}
 .tc-text{font-size:.9rem;color:var(--txt2);line-height:1.72;position:relative;z-index:1}
 .tc-bar{height:3px;border-radius:2px;margin-top:18px}
 
-/* ── FEEDBACK ── */
-.feedback-sec{background:var(--bg-alt);position:relative;z-index:1}
-.feedback-inner{max-width:720px;margin:0 auto}
-.fb-card{background:var(--glass);border:1px solid var(--glass-border2);border-radius:var(--r-xl);overflow:hidden;backdrop-filter:blur(16px)}
-.fb-top{padding:26px 32px;background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(124,58,237,0.08));border-bottom:1px solid var(--glass-border);text-align:center}
-.fb-top-title{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900;color:var(--txt);margin-bottom:5px}
-.fb-top-sub{font-size:.86rem;color:var(--txt2)}
-.fb-body{padding:30px 32px}
-.fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-@media(max-width:560px){.fb-grid{grid-template-columns:1fr}}
-.fb-field{display:flex;flex-direction:column;gap:5px}
-.fb-field.full{grid-column:1/-1}
-.fb-field label{font-size:.72rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;font-family:'Space Grotesk',sans-serif}
-.fb-field label .req{color:var(--purple);margin-left:2px}
-.fb-field input,.fb-field select,.fb-field textarea{padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:15px;border:1px solid var(--glass-border2);border-radius:var(--r-sm);outline:none;color:var(--txt);background:rgba(255,255,255,0.03);transition:all .2s;width:100%}
-.fb-field input:focus,.fb-field select:focus,.fb-field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,85,247,0.12)}
-.fb-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23A855F7' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer;background-color:rgba(255,255,255,0.03)}
-.fb-field select option{background:#0D1525;color:#E8EEFF}
-.fb-field textarea{resize:vertical;min-height:90px}
-.star-rating{display:flex;gap:6px;flex-direction:row-reverse;justify-content:flex-end}
-.star-rating input{display:none}
-.star-rating label{font-size:2rem;cursor:pointer;color:rgba(255,255,255,0.1);transition:color .15s;line-height:1}
-.star-rating label:hover,.star-rating label:hover~label,.star-rating input:checked~label{color:#FFD60A;text-shadow:0 0 12px rgba(255,214,10,0.5)}
-.fb-recommend{display:flex;gap:10px}
-.fb-rec-btn{flex:1;padding:11px;border:1px solid var(--glass-border2);border-radius:var(--r-sm);background:var(--glass);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:800;color:var(--txt2);cursor:pointer;transition:all .2s;text-align:center}
-.fb-rec-btn.yes:hover,.fb-rec-btn.yes.active{border-color:var(--green);background:rgba(0,255,136,0.07);color:var(--green)}
-.fb-rec-btn.no:hover,.fb-rec-btn.no.active{border-color:var(--pink);background:rgba(255,45,120,0.07);color:var(--pink)}
-.fb-submit-row{margin-top:20px}
-.fb-footer{padding:14px 24px;background:rgba(168,85,247,0.04);border-top:1px solid var(--glass-border);font-size:.75rem;color:var(--txt3);text-align:center;line-height:1.55}
-.fb-footer strong{color:var(--purple)}
-.fb-success{display:none;text-align:center;padding:32px 20px}
-.fb-success .s-big{font-size:3.5rem;margin-bottom:12px}
-.fb-success h3{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--purple);margin-bottom:8px}
-.fb-success p{font-size:.9rem;color:var(--txt2);line-height:1.7}
 
 
 /* ── BROCHURE SECTION ── */
@@ -1053,6 +1027,10 @@ input,select,textarea{font-size:16px !important}
   .t-name{font-size:2rem}
   .t-desc{font-size:.9rem;line-height:1.7;padding-right:68px}
   .av-ring{width:160px;height:160px}
+  .t-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .t-stat-box{padding:12px 8px;min-width:0}
+  .t-snum{font-size:1.35rem}
+  .t-slbl{font-size:.56rem}
 
   /* ─ Transformation ─ */
   .tf-grid{grid-template-columns:1fr;gap:16px}
@@ -1067,12 +1045,6 @@ input,select,textarea{font-size:16px !important}
   .tn-num{font-size:1.8rem}
   .tn-lbl{font-size:.6rem;letter-spacing:.04em}
   .testi-grid{grid-template-columns:1fr}
-
-  /* ─ Feedback form ─ */
-  .fb-top{padding:20px 18px}
-  .fb-body{padding:20px 16px}
-  .fb-grid{grid-template-columns:1fr}
-  .fb-field.full{grid-column:1}
 
   /* ─ Brochure section ─ */
   .brochure-card{grid-template-columns:1fr}
@@ -1107,7 +1079,10 @@ input,select,textarea{font-size:16px !important}
   .modal-box{
     border-radius:var(--r-xl) var(--r-xl) 0 0;
     max-height:92vh;max-width:100%;
+    overflow-y:auto;
   }
+  #feedbackModal .modal-box > div:last-child{padding:22px 20px}
+  #feedbackModal .modal-box button{padding:13px;font-size:.92rem}
 
   /* ─ WA widget ─ */
   .wa-widget{width:calc(100vw - 28px);right:14px;bottom:148px;border-radius:16px}
@@ -1351,6 +1326,27 @@ input,select,textarea{font-size:16px !important}
   </div>
 </div>
 
+<!-- FEEDBACK POPUP -->
+<div class="modal-overlay" id="feedbackModal" onclick="handleFeedbackOverlayClick(event)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-top">
+      <div class="mt-text"><div class="mt">⭐ Your Experience</div><div class="ms">Help us know how we're doing!</div></div>
+      <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+    </div>
+    <div style="padding:30px 26px;text-align:center">
+      <p style="font-size:1.02rem;color:var(--txt);margin-bottom:24px;line-height:1.6">Aapka experience kaisa raha <strong>Jethani's Classes</strong> mein?</p>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <button onclick="feedbackGreat()" class="btn btn-block" style="background:linear-gradient(135deg,#FFD60A,#FFB800);color:#1a1a1a;font-size:1rem;font-weight:800;padding:16px;border-radius:var(--r-lg);box-shadow:0 8px 24px rgba(255,214,10,0.3)">
+          😊 Great, I loved it!
+        </button>
+        <button onclick="feedbackImprove()" class="btn btn-block" style="background:var(--glass2);border:1px solid var(--glass-border2);color:var(--txt);font-size:1rem;font-weight:700;padding:16px;border-radius:var(--r-lg)">
+          😐 Could be better
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="wrap">
@@ -1364,8 +1360,11 @@ input,select,textarea{font-size:16px !important}
           <svg width="13" height="13" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.88 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012.79 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.75a16 16 0 006.29 6.29l1.11-1.11a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="currentColor"/></svg>
           <span class="nb-phone-num">9028606929</span>
         </a>
-        <a href="#brochure" class="btn btn-glass nb-btn" onclick="track('brochure_click','engagement','navbar_brochure')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(0,229,255,0.25);color:var(--cyan)">📄 Brochure</a>
-        <a href="#admission" class="btn btn-cyan nb-btn" onclick="track('cta_click','engagement','navbar_admission')">Admission</a>
+        <a href="#brochure" class="btn btn-glass nb-btn nb-brochure-btn" onclick="track('brochure_click','engagement','navbar_brochure')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(0,229,255,0.25);color:var(--cyan)">📄 Brochure</a>
+        <div class="nb-cta-row">
+          <a href="#admission" class="btn btn-cyan nb-btn" onclick="track('cta_click','engagement','navbar_admission')">Admission</a>
+          <a href="javascript:void(0)" class="btn btn-glass nb-btn" onclick="openFeedbackPopup();track('feedback_click','engagement','navbar_feedback')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(255,214,10,0.25);color:#FFD60A">⭐ Feedback</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2091,86 +2090,6 @@ input,select,textarea{font-size:16px !important}
   </div>
 </section>
 
-<!-- ═══ STUDENT FEEDBACK ═══ -->
-<section class="sec feedback-sec" id="feedback">
-  <div class="wrap">
-    <div class="rv" style="text-align:center;margin-bottom:36px">
-      <div class="label lb-purple">⭐ Student Feedback</div>
-      <h2 class="sec-title">Share Your Experience</h2>
-      <p class="sec-sub" style="margin:0 auto">Completed a course? We'd love to hear from you!</p>
-    </div>
-    <div class="feedback-inner rv d1">
-      <div class="fb-card">
-        <div class="fb-top">
-          <div class="fb-top-title">📝 Student / Parent Feedback Form</div>
-          <div class="fb-top-sub">Takes 2 minutes · Responses saved securely</div>
-        </div>
-        <div class="fb-body">
-          <form id="feedbackForm">
-            <div class="fb-grid">
-              <div class="fb-field">
-                <label>Your Name <span class="req">*</span></label>
-                <input type="text" id="fb_name" placeholder="Student or Parent name" maxlength="80" autocomplete="name" required>
-              </div>
-              <div class="fb-field">
-                <label>Course Completed <span class="req">*</span></label>
-                <select id="fb_course" required>
-                  <option value="" disabled selected>Select course</option>
-                  <option>Vedic Mathematics</option>
-                  <option>English Speaking</option>
-                  <option>Computer Classes</option>
-                  <option>Artificial Intelligence (AI)</option>
-                  <option>Programming</option>
-                  <option>Phonics</option>
-                </select>
-              </div>
-              <div class="fb-field full">
-                <label>Overall Rating <span class="req">*</span></label>
-                <div class="star-rating" id="starRating">
-                  <input type="radio" name="rating" id="s5" value="5"><label for="s5">★</label>
-                  <input type="radio" name="rating" id="s4" value="4"><label for="s4">★</label>
-                  <input type="radio" name="rating" id="s3" value="3"><label for="s3">★</label>
-                  <input type="radio" name="rating" id="s2" value="2"><label for="s2">★</label>
-                  <input type="radio" name="rating" id="s1" value="1"><label for="s1">★</label>
-                </div>
-              </div>
-              <div class="fb-field full">
-                <label>What did you learn? What improved? <span class="req">*</span></label>
-                <textarea id="fb_learn" placeholder="e.g. My child can now solve maths 10x faster..." maxlength="600" required></textarea>
-              </div>
-              <div class="fb-field full">
-                <label>How was the overall experience?</label>
-                <textarea id="fb_quality" placeholder="e.g. Ashish Sir explains very patiently..." maxlength="400"></textarea>
-              </div>
-              <div class="fb-field full">
-                <label>Would you recommend Jethani Classes to others? <span class="req">*</span></label>
-                <div class="fb-recommend">
-                  <button type="button" class="fb-rec-btn yes" id="rec_yes" onclick="setRecommend('yes')">👍 Yes, Definitely!</button>
-                  <button type="button" class="fb-rec-btn no" id="rec_no" onclick="setRecommend('no')">👎 No</button>
-                </div>
-                <input type="hidden" id="fb_recommend" value="">
-              </div>
-            </div>
-            <div class="fb-submit-row">
-              <button type="button" class="btn btn-block" onclick="submitFeedback()"
-                style="background:linear-gradient(135deg,var(--purple2),var(--purple));color:#fff;font-size:1rem;padding:16px;border-radius:var(--r-lg);box-shadow:var(--glow-purple)">
-                ⭐ Submit My Feedback
-              </button>
-            </div>
-          </form>
-          <div class="fb-success" id="feedbackSuccess">
-            <div class="s-big">🙏</div>
-            <h3>Thank You for Your Feedback!</h3>
-            <p>Your response has been saved and will help us serve students even better.</p>
-          </div>
-        </div>
-        <div class="fb-footer">📊 <strong>Ashish Sir reviews every response personally</strong></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <!-- ═══ BROCHURE DOWNLOAD ═══ -->
 <section class="brochure-sec" id="brochure">
   <div class="wrap">
@@ -2419,6 +2338,22 @@ document.querySelectorAll('a[href*="whatsapp"],a[href*="wa.me"]').forEach(el=>
 function openModal(){document.getElementById('enquiryModal').classList.add('open');document.body.style.overflow='hidden';track('modal_open','engagement','enquiry_modal');}
 function closeModal(){document.getElementById('enquiryModal').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('enquiryModal'))closeModal();}
+
+/* ══ FEEDBACK POPUP (Option A) ══ */
+function openFeedbackPopup(){document.getElementById('feedbackModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeFeedbackModal(){document.getElementById('feedbackModal').classList.remove('open');document.body.style.overflow='';}
+function handleFeedbackOverlayClick(e){if(e.target===document.getElementById('feedbackModal'))closeFeedbackModal();}
+function feedbackGreat(){
+  track('feedback_great','engagement','google_review');
+  closeFeedbackModal();
+  window.open('https://g.page/r/CTjOX7pOonOwEBM/review','_blank');
+}
+function feedbackImprove(){
+  track('feedback_improve','engagement','whatsapp_private');
+  closeFeedbackModal();
+  var wm="Hi Sir, I want to share some feedback about my experience at Jethani Classes...";
+  window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank');
+}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 /* ══ ADMISSION FORM → WHATSAPP ══ */
@@ -2445,33 +2380,6 @@ function sendToWhatsApp(){
   setTimeout(()=>window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank'),600);
 }
 
-/* ══ FEEDBACK FORM ══ */
-var recommendValue='';
-function setRecommend(val){
-  recommendValue=val;
-  document.getElementById('fb_recommend').value=val;
-  document.getElementById('rec_yes').classList.toggle('active',val==='yes');
-  document.getElementById('rec_no').classList.toggle('active',val==='no');
-}
-
-function submitFeedback(){
-  var name=document.getElementById('fb_name').value.trim();
-  var course=document.getElementById('fb_course').value;
-  var ratingEl=document.querySelector('input[name="rating"]:checked');
-  var rating=ratingEl?ratingEl.value:'';
-  var learn=document.getElementById('fb_learn').value.trim();
-  var quality=document.getElementById('fb_quality').value.trim();
-  var recommend=document.getElementById('fb_recommend').value;
-  if(!name||!course||!rating||!learn||!recommend){
-    alert('Please fill all required fields and select a star rating & recommendation.');
-    return;
-  }
-  track('feedback_submitted','engagement',course+':'+rating+'stars');
-  var wm="⭐ STUDENT FEEDBACK\n\nName: "+name+"\nCourse: "+course+"\nRating: "+rating+"/5 stars\n\nWhat they learned:\n"+learn+(quality?"\n\nTeaching quality:\n"+quality:"")+"\n\nRecommend? "+recommend.toUpperCase();
-  document.getElementById('feedbackForm').style.display='none';
-  document.getElementById('feedbackSuccess').style.display='block';
-  setTimeout(()=>{window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank');},1000);
-}
 </script>
 
 <script>
