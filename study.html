@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Study Material — Jethani Classes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900;1000&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:#070B14;color:#E8EEFF;overflow-x:hidden;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;visibility:hidden}
+a{text-decoration:none;color:inherit}
+
+:root{
+  --bg-deep:#070B14;
+  --bg-section:#0A0F1E;
+  --bg-alt:#0D1525;
+  --cyan:#00E5FF;
+  --cyan2:#00B4D8;
+  --purple:#A855F7;
+  --purple2:#7C3AED;
+  --orange:#FF6B35;
+  --orange2:#FF9558;
+  --green:#00FF88;
+  --green2:#00C96B;
+  --pink:#FF2D78;
+  --yellow:#FFD60A;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.06);
+  --glass-border:rgba(255,255,255,0.08);
+  --glass-border2:rgba(255,255,255,0.13);
+  --txt:#E8EEFF;
+  --txt2:rgba(232,238,255,0.65);
+  --txt3:rgba(232,238,255,0.35);
+  --glow-cyan:0 0 24px rgba(0,229,255,0.4),0 0 48px rgba(0,229,255,0.15);
+  --glow-purple:0 0 24px rgba(168,85,247,0.4),0 0 48px rgba(168,85,247,0.15);
+  --glow-orange:0 0 24px rgba(255,107,53,0.45),0 0 48px rgba(255,107,53,0.18);
+  --glow-green:0 0 24px rgba(0,255,136,0.4),0 0 48px rgba(0,255,136,0.15);
+  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:26px;--r-pill:100px;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0A0F1E}
+::-webkit-scrollbar-thumb{background:rgba(0,229,255,0.3);border-radius:3px}
+
+/* ── NAVBAR ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(7,11,20,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border)}
+.nb-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;max-width:1120px;margin:0 auto}
+.nb-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nb-icon{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--cyan2),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:.9rem;color:#fff;flex-shrink:0;box-shadow:0 0 20px rgba(0,229,255,0.3)}
+.nb-name{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--txt)}
+.nb-loc{font-size:.7rem;color:var(--txt3)}
+.nb-back{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:700;color:var(--txt2);border:1px solid var(--glass-border2);background:var(--glass2);padding:8px 16px;border-radius:var(--r-pill);transition:all .2s;cursor:pointer}
+.nb-back:hover{color:var(--cyan);border-color:var(--cyan)}
+
+/* ── LAYOUT ── */
+.page-wrap{max-width:560px;margin:0 auto;padding:48px 22px 80px}
+
+/* ── SECTION TITLES ── */
+.page-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;font-family:'Space Grotesk',sans-serif}
+.page-title{font-family:'Nunito',sans-serif;font-size:2rem;font-weight:900;color:var(--txt);line-height:1.15;margin-bottom:6px}
+.page-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-sub{font-size:.9rem;color:var(--txt2);margin-bottom:36px}
+
+/* ── AUTH CARD ── */
+.auth-card{background:var(--bg-section);border:1px solid var(--glass-border2);border-radius:var(--r-xl);padding:36px 32px;box-shadow:0 24px 64px rgba(0,0,0,0.4)}
+
+/* ── FORM FIELDS (exactly like admission form) ── */
+.form-field{display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.form-field label{font-size:.72rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;font-family:'Space Grotesk',sans-serif}
+.form-field label .req{color:var(--orange);margin-left:2px}
+.form-field input{padding:13px 14px;font-family:'DM Sans',sans-serif;font-size:15px;border:1px solid var(--glass-border2);border-radius:var(--r-sm);outline:none;color:var(--txt);background:rgba(255,255,255,0.03);transition:all .2s;width:100%}
+.form-field input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,85,247,0.15)}
+.form-field input::placeholder{color:var(--txt3)}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;border:none;border-radius:var(--r-md);padding:14px 24px;cursor:pointer;transition:all .25s cubic-bezier(.34,1.56,.64,1);line-height:1;width:100%;position:relative;overflow:hidden}
+.btn-purple{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;box-shadow:var(--glow-purple)}
+.btn-purple:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(168,85,247,0.6)}
+.btn-orange{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;box-shadow:var(--glow-orange)}
+.btn-orange:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(255,107,53,0.6)}
+.btn-glass{background:var(--glass2);color:var(--txt);border:1px solid var(--glass-border2);backdrop-filter:blur(12px)}
+.btn-glass:hover{border-color:var(--purple);color:var(--purple)}
+
+/* ── LINKS ── */
+.text-link{color:var(--purple);font-size:.85rem;font-weight:600;cursor:pointer;background:none;border:none;padding:0;transition:opacity .2s;display:inline}
+.text-link:hover{opacity:.75}
+
+/* ── DIVIDER ── */
+.divider{display:flex;align-items:center;gap:12px;margin:22px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--glass-border2)}
+.divider span{font-size:.75rem;color:var(--txt3);white-space:nowrap}
+
+/* ── ERROR ── */
+.form-error{color:#ff6b6b;font-size:.82rem;font-weight:600;margin-bottom:14px;display:none;padding:10px 14px;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.2);border-radius:var(--r-sm)}
+.form-success{color:var(--green);font-size:.82rem;font-weight:600;margin-bottom:14px;display:none;padding:10px 14px;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:var(--r-sm)}
+
+/* ── USER BAR ── */
+.user-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--glass);border:1px solid var(--glass-border2);border-radius:var(--r-md);margin-bottom:28px;backdrop-filter:blur(8px)}
+.user-welcome{font-size:.9rem;color:var(--txt2)}
+.user-welcome strong{color:var(--purple);font-weight:800}
+.logout-btn{font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:var(--r-pill);background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.25);color:var(--orange);cursor:pointer;transition:all .2s}
+.logout-btn:hover{background:rgba(255,107,53,0.2);box-shadow:var(--glow-orange)}
+
+/* ── SUBJECT PILL CARDS ── */
+.subjects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+.subject-pill{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:var(--r-pill);border:1px solid;backdrop-filter:blur(8px);cursor:pointer;transition:all .25s;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem}
+.subject-pill:hover{transform:translateY(-3px)}
+.subject-pill .sp-icon{font-size:1.2rem;flex-shrink:0}
+.subject-pill.math{background:rgba(255,214,10,.08);border-color:rgba(255,214,10,.25);color:#FFD60A}
+.subject-pill.math:hover{box-shadow:0 0 24px rgba(255,214,10,.3)}
+.subject-pill.eng{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.25);color:#00E5FF}
+.subject-pill.eng:hover{box-shadow:var(--glow-cyan)}
+.subject-pill.comp{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25);color:#A855F7}
+.subject-pill.comp:hover{box-shadow:var(--glow-purple)}
+.subject-pill.ai{background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.25);color:#00FF88}
+.subject-pill.ai:hover{box-shadow:var(--glow-green)}
+.subject-pill.phon{background:rgba(255,45,120,.08);border-color:rgba(255,45,120,.25);color:#FF2D78}
+.subject-pill.phon:hover{box-shadow:0 0 24px rgba(255,45,120,.3)}
+.subject-pill.prog{background:rgba(0,180,216,.08);border-color:rgba(0,180,216,.25);color:#00B4D8}
+.subject-pill.prog:hover{box-shadow:var(--glow-cyan)}
+/* ── NOTES SECTION ── */
+.notes-section{display:none;animation:fadeUp .3s ease both}
+.notes-section.active{display:block}
+.notes-back{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--txt3);cursor:pointer;background:none;border:none;padding:0;margin-bottom:20px;transition:color .2s}
+.notes-back:hover{color:var(--txt)}
+.notes-category{margin-bottom:24px}
+.notes-category-title{display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:var(--r-pill);margin-bottom:14px}
+.notes-category-title.free{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
+.notes-category-title.paid{background:rgba(255,107,53,.1);color:var(--orange);border:1px solid rgba(255,107,53,.2)}
+.notes-list{display:flex;flex-direction:column;gap:10px}
+.note-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:var(--r-md);border:1px solid var(--glass-border2);background:var(--glass);backdrop-filter:blur(8px);transition:all .2s}
+.note-item:hover{border-color:var(--glass-border2);background:var(--glass2)}
+.note-info{display:flex;flex-direction:column;gap:3px}
+.note-title{font-size:.85rem;font-weight:700;color:var(--txt)}
+.note-desc{font-size:.72rem;color:var(--txt3)}
+.note-dl-btn{flex-shrink:0;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;padding:7px 14px;border-radius:var(--r-pill);border:none;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;cursor:pointer;white-space:nowrap;transition:all .2s;text-decoration:none;display:inline-block}
+.note-dl-btn:hover{opacity:.85;transform:translateY(-1px)}
+.note-lock-btn{flex-shrink:0;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;padding:7px 14px;border-radius:var(--r-pill);border:1px solid var(--glass-border2);background:transparent;color:var(--txt3);cursor:not-allowed;opacity:.6;white-space:nowrap}
+@media(max-width:480px){
+  .subjects-grid{grid-template-columns:repeat(2,1fr)}
+  .subject-pill{font-size:.78rem;padding:12px 12px}
+}
+
+/* ── SCREENS ── */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.auth-card,.pdf-grid,.user-bar{animation:fadeUp .4s cubic-bezier(.22,1,.36,1) both}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .auth-card{padding:28px 20px}
+  .pdf-grid{grid-template-columns:1fr}
+  .page-title{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nb-inner">
+    <div class="nb-logo" style="cursor:default">
+      <div class="nb-icon">JC</div>
+      <div>
+        <div class="nb-name">Jethani Classes</div>
+        <div class="nb-loc">📍 Bhusawal, Maharashtra</div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="page-wrap">
+
+  <!-- ═══ LOGIN SCREEN ═══ -->
+  <div class="screen active" id="screen-login">
+    <div class="page-eyebrow">📚 Study Material</div>
+    <h1 class="page-title">Welcome <span>Back</span></h1>
+    <p class="page-sub">Login to access your notes and worksheets</p>
+
+    <div class="auth-card">
+      <div class="form-field">
+        <label>Username</label>
+        <input type="text" id="login-username" placeholder="Enter your username" autocomplete="username">
+      </div>
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <div class="form-error" id="login-error"></div>
+      <button class="btn btn-purple" onclick="doLogin()">Login</button>
+      <div style="text-align:center;margin-top:16px">
+        <button class="text-link" onclick="showScreen('forgot')">Forgot Password?</button>
+      </div>
+      <div class="divider"><span>New here?</span></div>
+      <button class="btn btn-orange" onclick="showScreen('signup')">Create Account</button>
+    </div>
+  </div>
+
+  <!-- ═══ SIGNUP SCREEN ═══ -->
+  <div class="screen" id="screen-signup">
+    <div class="page-eyebrow">✨ Get Started</div>
+    <h1 class="page-title">Create <span>Account</span></h1>
+    <p class="page-sub">Sign up to access study material</p>
+
+    <div class="auth-card">
+      <div class="form-field">
+        <label>Username <span class="req">*</span></label>
+        <input type="text" id="su-username" placeholder="Choose a username" autocomplete="username">
+      </div>
+      <div class="form-field">
+        <label>Mobile Number <span class="req">*</span></label>
+        <input type="tel" id="su-phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+      </div>
+      <div class="form-field">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" id="su-email" placeholder="Your email address" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label>Password <span class="req">*</span></label>
+        <input type="password" id="su-password" placeholder="Minimum 6 characters" autocomplete="new-password">
+      </div>
+      <div class="form-field">
+        <label>Confirm Password <span class="req">*</span></label>
+        <input type="password" id="su-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+      </div>
+      <div class="form-error" id="signup-error"></div>
+      <button class="btn btn-purple" onclick="doSignup()">Create Account</button>
+      <div style="text-align:center;margin-top:16px">
+        <button class="text-link" onclick="showScreen('login')">← Already have an account? Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FORGOT PASSWORD SCREEN ═══ -->
+  <div class="screen" id="screen-forgot">
+    <div class="page-eyebrow">🔑 Reset Password</div>
+    <h1 class="page-title">Forgot <span>Password?</span></h1>
+    <p class="page-sub">Enter your registered mobile number — OTP will be sent via SMS</p>
+
+    <div class="auth-card">
+      <div class="form-field">
+        <label>Registered Mobile Number</label>
+        <input type="tel" id="forgot-phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+      </div>
+      <div id="otp-fields" style="display:none">
+        <div class="form-field">
+          <label>OTP</label>
+          <input type="number" id="forgot-otp" placeholder="Enter 6-digit OTP">
+        </div>
+        <div class="form-field">
+          <label>New Password</label>
+          <input type="password" id="forgot-newpass" placeholder="Minimum 6 characters">
+        </div>
+      </div>
+      <div class="form-error" id="forgot-error"></div>
+      <div class="form-success" id="forgot-success"></div>
+      <button class="btn btn-orange" id="forgot-btn" onclick="doForgotSendOTP()">Send OTP</button>
+      <div style="text-align:center;margin-top:16px">
+        <button class="text-link" onclick="showScreen('login')">← Back to Login</button>
+      </div>
+      <div id="recaptcha-container"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CONTENT SCREEN (PDF Notes) ═══ -->
+  <div class="screen" id="screen-content">
+    <div class="page-eyebrow">📚 Study Material</div>
+    <h1 class="page-title">Your <span>Notes</span></h1>
+
+    <div class="user-bar">
+      <div class="user-welcome">Welcome, <strong id="content-username">Student</strong>! 👋</div>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+
+    <div id="pdf-content">
+      <!-- Dynamically inserted -->
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<!-- ═══ FIREBASE ═══ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber, updatePassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzd1rRibO_fEoBOmq94vhcKmsSo91-W24",
+  authDomain: "jethaniclasses-dad3a.firebaseapp.com",
+  projectId: "jethaniclasses-dad3a",
+  storageBucket: "jethaniclasses-dad3a.firebasestorage.app",
+  messagingSenderId: "918008409496",
+  appId: "1:918008409496:web:ae1ffc6885a5f7ce43cfed"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ── SUBJECTS DATA (placeholder PDFs) ──
+const SUBJECTS_DATA = {
+  'Vedic Mathematics': [
+    {title:'Vedic Maths — Chapter 1', desc:'Introduction & Basic Tricks', free:true, url:'#', cls:'math'},
+    {title:'Vedic Maths — Chapter 2', desc:'Multiplication Shortcuts', free:true, url:'#', cls:'math'},
+    {title:'Vedic Maths — Chapter 3', desc:'Division Tricks', free:false, url:'#', cls:'math'},
+    {title:'Vedic Maths — Chapter 4', desc:'Squares & Cubes', free:false, url:'#', cls:'math'},
+  ],
+  'English Speaking': [
+    {title:'English — Module 1', desc:'Common phrases & greetings', free:true, url:'#', cls:'eng'},
+    {title:'English — Module 2', desc:'Conversation skills', free:true, url:'#', cls:'eng'},
+    {title:'English — Module 3', desc:'Fluency & Grammar', free:false, url:'#', cls:'eng'},
+  ],
+  'Computer Classes': [
+    {title:'Computer Basics — Part 1', desc:'Hardware & Software intro', free:true, url:'#', cls:'comp'},
+    {title:'Computer Basics — Part 2', desc:'MS Office Introduction', free:true, url:'#', cls:'comp'},
+    {title:'Computer Basics — Part 3', desc:'Internet & Email', free:false, url:'#', cls:'comp'},
+  ],
+  'Artificial Intelligence (AI)': [
+    {title:'AI for Beginners', desc:'What is AI & how it works', free:true, url:'#', cls:'ai'},
+    {title:'AI Tools & Applications', desc:'Practical AI tools', free:true, url:'#', cls:'ai'},
+    {title:'AI Projects', desc:'Hands-on projects', free:false, url:'#', cls:'ai'},
+  ],
+  'Programming (Python/C/C++)': [
+    {title:'Python Basics', desc:'Variables, loops, functions', free:true, url:'#', cls:'prog'},
+    {title:'Python Intermediate', desc:'Lists, dicts, OOP', free:false, url:'#', cls:'prog'},
+  ],
+  'Phonics': [
+    {title:'Phonics — Phase 1-2', desc:'42 sounds introduction', free:true, url:'#', cls:'phon'},
+    {title:'Phonics — Phase 3-4', desc:'Blending & reading', free:true, url:'#', cls:'phon'},
+    {title:'Phonics — Phase 5-8', desc:'Advanced phonics', free:false, url:'#', cls:'phon'},
+  ]
+};
+
+// ── SANITIZE TEXT (prevent XSS) ──
+function sanitize(str) {
+  const div = document.createElement('div');
+  div.textContent = String(str || '');
+  return div.innerHTML;
+}
+
+// ── VALIDATE URL (prevent open redirect/javascript: injection) ──
+function safeUrl(url) {
+  if (!url || url === '#') return '#';
+  try {
+    const u = new URL(url, window.location.origin);
+    if (u.protocol === 'https:' || u.protocol === 'http:') return url;
+  } catch(e) {}
+  return '#';
+}
+
+// ── SHOW SCREEN (whitelist only) ──
+const ALLOWED_SCREENS = ['login', 'signup', 'forgot', 'content'];
+window.showScreen = function(name) {
+  if (!ALLOWED_SCREENS.includes(name)) return;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+};
+
+// ── FORCE LOGOUT ON EVERY PAGE LOAD ──
+signOut(auth).then(() => {
+  document.body.style.visibility = 'visible';
+  showScreen('login');
+});
+
+// ── SUBJECTS CONFIG ──
+const SUBJECT_PILLS = [
+  {key:'Vedic Mathematics',  cls:'math', icon:'🔢', label:'Vedic Maths'},
+  {key:'English Speaking',   cls:'eng',  icon:'🗣️', label:'English Speaking'},
+  {key:'Computer Classes',   cls:'comp', icon:'💻', label:'Computers'},
+  {key:'Artificial Intelligence (AI)', cls:'ai', icon:'🤖', label:'AI'},
+  {key:'Phonics',            cls:'phon', icon:'🔤', label:'Phonics'},
+  {key:'Programming (Python/C/C++)', cls:'prog', icon:'💡', label:'Programming'},
+];
+
+// ── RENDER SUBJECT PILLS ──
+function renderSubjectPills(enrolledSubject) {
+  const container = document.getElementById('pdf-content');
+  container.innerHTML = `<div class="subjects-grid" id="pills-grid"></div><div id="notes-area"></div>`;
+  const grid = document.getElementById('pills-grid');
+  SUBJECT_PILLS.forEach(s => {
+    const pill = document.createElement('div');
+    pill.className = `subject-pill ${s.cls}`;
+    pill.innerHTML = `<span class="sp-icon">${s.icon}</span><span>${s.label}</span>`;
+    // Use closure — no string interpolation in onclick
+    pill.addEventListener('click', () => showNotes(s.key, enrolledSubject || null));
+    grid.appendChild(pill);
+  });
+}
+
+// ── SHOW NOTES FOR SUBJECT ──
+window.showNotes = function(subject, enrolledSubject) {
+  // Whitelist subject keys — prevent injection
+  if (!SUBJECTS_DATA[subject]) return;
+  const notes = SUBJECTS_DATA[subject];
+  const isEnrolled = enrolledSubject === subject;
+  const freeNotes  = notes.filter(n => n.free);
+  const paidNotes  = notes.filter(n => !n.free);
+
+  const area = document.getElementById('notes-area');
+  area.innerHTML = '';
+
+  const section = document.createElement('div');
+  section.className = 'notes-section active';
+
+  // Back button
+  const backBtn = document.createElement('button');
+  backBtn.className = 'notes-back';
+  backBtn.textContent = '← Back to Subjects';
+  backBtn.addEventListener('click', () => { area.innerHTML = ''; });
+  section.appendChild(backBtn);
+
+  // Build note item using DOM (safe from XSS)
+  function buildNoteItem(n, canDownload) {
+    const item = document.createElement('div');
+    item.className = 'note-item';
+    const info = document.createElement('div');
+    info.className = 'note-info';
+    const titleEl = document.createElement('div');
+    titleEl.className = 'note-title';
+    titleEl.textContent = n.title; // textContent — no XSS
+    const descEl = document.createElement('div');
+    descEl.className = 'note-desc';
+    descEl.textContent = n.desc;
+    info.appendChild(titleEl);
+    info.appendChild(descEl);
+    item.appendChild(info);
+    if (canDownload) {
+      const btn = document.createElement('a');
+      btn.className = 'note-dl-btn';
+      btn.href = safeUrl(n.url); // validated URL
+      btn.textContent = '⬇ Download';
+      if (n.url && n.url !== '#') btn.target = '_blank';
+      item.appendChild(btn);
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'note-lock-btn';
+      btn.disabled = true;
+      btn.textContent = '🔒 Coming Soon';
+      item.appendChild(btn);
+    }
+    return item;
+  }
+
+  // Free notes section
+  const freeCat = document.createElement('div');
+  freeCat.className = 'notes-category';
+  const freeTitle = document.createElement('div');
+  freeTitle.className = 'notes-category-title free';
+  freeTitle.textContent = '🆓 Free Notes';
+  freeCat.appendChild(freeTitle);
+  const freeList = document.createElement('div');
+  freeList.className = 'notes-list';
+  if (freeNotes.length) {
+    freeNotes.forEach(n => freeList.appendChild(buildNoteItem(n, true)));
+  } else {
+    freeList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No free notes yet — coming soon!</div>';
+  }
+  freeCat.appendChild(freeList);
+  section.appendChild(freeCat);
+
+  // Premium notes section
+  const paidCat = document.createElement('div');
+  paidCat.className = 'notes-category';
+  const paidTitle = document.createElement('div');
+  paidTitle.className = 'notes-category-title paid';
+  paidTitle.textContent = '💎 Premium Notes';
+  paidCat.appendChild(paidTitle);
+  const paidList = document.createElement('div');
+  paidList.className = 'notes-list';
+  if (paidNotes.length) {
+    paidNotes.forEach(n => paidList.appendChild(buildNoteItem(n, isEnrolled)));
+  } else {
+    paidList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No premium notes yet — coming soon!</div>';
+  }
+  paidCat.appendChild(paidList);
+  section.appendChild(paidCat);
+
+  area.appendChild(section);
+};
+
+// ── SHOW CONTENT ──
+function showContent(data) {
+  // Use textContent (not innerHTML) to prevent XSS
+  document.getElementById('content-username').textContent = sanitize(data.username) || 'Student';
+  showScreen('content');
+  renderSubjectPills(data.enrolledSubject || null);
+}
+
+// ── LOGIN RATE LIMITING ──
+let loginAttempts = 0;
+let loginLockUntil = 0;
+
+// ── LOGIN ──
+window.doLogin = async function() {
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+
+  // Rate limit check
+  if (Date.now() < loginLockUntil) {
+    const secs = Math.ceil((loginLockUntil - Date.now()) / 1000);
+    showErr(errEl, `Too many attempts. Please wait ${secs} seconds.`);
+    return;
+  }
+
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  if (!username || !password) { showErr(errEl, 'Please enter username and password.'); return; }
+
+  // Basic username validation — alphanumeric only
+  if (!/^[a-zA-Z0-9_]{3,30}$/.test(username)) {
+    showErr(errEl, 'Invalid username format.');
+    return;
+  }
+
+  try {
+    const q = query(collection(db, 'users'), where('username', '==', username));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      loginAttempts++;
+      if (loginAttempts >= 5) { loginLockUntil = Date.now() + 60000; loginAttempts = 0; }
+      showErr(errEl, 'Username not found. Please sign up first.');
+      return;
+    }
+
+    const userData = snap.docs[0].data();
+    await signInWithEmailAndPassword(auth, userData.email, password);
+    loginAttempts = 0;
+    showContent(userData);
+  } catch(e) {
+    loginAttempts++;
+    if (loginAttempts >= 5) {
+      loginLockUntil = Date.now() + 60000; // lock 60 seconds
+      loginAttempts = 0;
+      showErr(errEl, 'Too many failed attempts. Please wait 60 seconds.');
+    } else {
+      showErr(errEl, `Incorrect password. ${5 - loginAttempts} attempts remaining.`);
+    }
+  }
+};
+
+// ── SIGNUP ──
+window.doSignup = async function() {
+  const username = document.getElementById('su-username').value.trim();
+  const phone    = document.getElementById('su-phone').value.trim();
+  const email    = document.getElementById('su-email').value.trim();
+  const password = document.getElementById('su-password').value;
+  const confirm  = document.getElementById('su-confirm').value;
+  const errEl    = document.getElementById('signup-error');
+  errEl.style.display = 'none';
+
+  if (!username || !phone || !email || !password || !confirm) { showErr(errEl, 'Please fill all fields.'); return; }
+  if (!/^\d{10}$/.test(phone)) { showErr(errEl, 'Please enter a valid 10-digit mobile number.'); return; }
+  if (password !== confirm) { showErr(errEl, 'Passwords do not match.'); return; }
+  if (password.length < 6)  { showErr(errEl, 'Password must be at least 6 characters.'); return; }
+
+  try {
+    // Check username unique
+    const uq = query(collection(db, 'users'), where('username', '==', username));
+    const uSnap = await getDocs(uq);
+    if (!uSnap.empty) { showErr(errEl, 'Username already taken. Please choose another.'); return; }
+
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const uid  = cred.user.uid;
+
+    // Check if enrolled (phone match in admissions)
+    const admSnap = await getDoc(doc(db, 'admissions', phone));
+    const enrolledSubject = admSnap.exists() ? admSnap.data().subject : null;
+
+    const userData = { username, phone, email, enrolledSubject: enrolledSubject || null, isEnrolled: !!enrolledSubject, createdAt: new Date().toISOString() };
+    await setDoc(doc(db, 'users', uid), userData);
+    showContent(userData);
+  } catch(e) {
+    if (e.code === 'auth/email-already-in-use') showErr(errEl, 'Email already registered. Please login.');
+    else showErr(errEl, 'Signup failed. Please try again.');
+  }
+};
+
+// ── LOGOUT ──
+window.doLogout = async function() {
+  await signOut(auth);
+  window.location.href = 'index.html';
+};
+
+// ── FORGOT PASSWORD ──
+let confirmResult = null;
+window.doForgotSendOTP = async function() {
+  const phone  = document.getElementById('forgot-phone').value.trim();
+  const errEl  = document.getElementById('forgot-error');
+  const succEl = document.getElementById('forgot-success');
+  errEl.style.display = 'none';
+  succEl.style.display = 'none';
+
+  if (!/^\d{10}$/.test(phone)) { showErr(errEl, 'Enter valid 10-digit mobile number.'); return; }
+
+  const q = query(collection(db, 'users'), where('phone', '==', phone));
+  const snap = await getDocs(q);
+  if (snap.empty) { showErr(errEl, 'Mobile number not registered. Please sign up first.'); return; }
+
+  try {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+    }
+    confirmResult = await signInWithPhoneNumber(auth, '+91' + phone, window.recaptchaVerifier);
+    document.getElementById('otp-fields').style.display = 'block';
+    document.getElementById('forgot-btn').textContent = 'Verify OTP & Reset';
+    document.getElementById('forgot-btn').onclick = doVerifyOTP;
+    succEl.textContent = 'OTP sent! Check your SMS.';
+    succEl.style.display = 'block';
+  } catch(e) {
+    showErr(errEl, 'OTP send failed. Please try again.');
+  }
+};
+
+window.doVerifyOTP = async function() {
+  const otp     = document.getElementById('forgot-otp').value.trim();
+  const newPass = document.getElementById('forgot-newpass').value;
+  const errEl   = document.getElementById('forgot-error');
+  const succEl  = document.getElementById('forgot-success');
+  errEl.style.display = 'none';
+
+  if (!otp || !newPass) { showErr(errEl, 'Enter OTP and new password.'); return; }
+  if (newPass.length < 6) { showErr(errEl, 'Password must be at least 6 characters.'); return; }
+
+  try {
+    const cred = await confirmResult.confirm(otp);
+    await updatePassword(cred.user, newPass);
+    succEl.textContent = 'Password reset successful! Redirecting to login...';
+    succEl.style.display = 'block';
+    setTimeout(() => showScreen('login'), 2000);
+  } catch(e) {
+    showErr(errEl, 'Invalid OTP. Please try again.');
+  }
+};
+
+// ── HELPER ──
+function showErr(el, msg) {
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── SAVE ADMISSION TO FIRESTORE (called from index.html) ──
+window.saveAdmissionToFirestore = async function(phone, subject, name) {
+  try {
+    await setDoc(doc(db, 'admissions', phone), { phone, subject, name, createdAt: new Date().toISOString() }, { merge: true });
+  } catch(e) { console.log('Firestore:', e.message); }
+};
+
+</script>
+</body>
+</html>
