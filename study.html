@@ -533,8 +533,19 @@ window.doLogin = async function() {
     }
 
     const userData = snap.docs[0].data();
-    await signInWithEmailAndPassword(auth, userData.email, password);
+    const cred = await signInWithEmailAndPassword(auth, userData.email, password);
     loginAttempts = 0;
+
+    // ── FRESH ADMISSION CHECK on every login ──
+    // If user signed up before filling admission form, update their enrolledSubject now
+    const admSnap = await getDoc(doc(db, 'admissions', userData.phone));
+    if (admSnap.exists() && !userData.enrolledSubject) {
+      const enrolledSubject = admSnap.data().subject;
+      await setDoc(doc(db, 'users', cred.user.uid), { enrolledSubject, isEnrolled: true }, { merge: true });
+      userData.enrolledSubject = enrolledSubject;
+      userData.isEnrolled = true;
+    }
+
     showContent(userData);
   } catch(e) {
     loginAttempts++;
