@@ -2637,8 +2637,19 @@ const SUBJECTS_DATA = {
 // ── SAVE TO FIRESTORE (called from admission form) ──
 window.saveAdmissionToFirestore = async function(phone, subject, name) {
   try {
+    // Save to admissions collection
     const docRef = doc(db, 'admissions', phone);
     await setDoc(docRef, { phone, subject, name, createdAt: new Date().toISOString() }, { merge: true });
+
+    // Also update users collection if account already exists with this phone
+    const usersQ = query(collection(db, 'users'), where('phone', '==', phone));
+    const usersSnap = await getDocs(usersQ);
+    if (!usersSnap.empty) {
+      const userDoc = usersSnap.docs[0];
+      if (!userDoc.data().enrolledSubject) {
+        await setDoc(doc(db, 'users', userDoc.id), { enrolledSubject: subject, isEnrolled: true }, { merge: true });
+      }
+    }
   } catch(e) { console.log('Firestore save:', e.message); }
 };
 
