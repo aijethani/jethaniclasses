@@ -1364,6 +1364,7 @@ input,select,textarea{font-size:16px !important}
         <div class="nb-cta-row">
           <a href="#admission" class="btn btn-cyan nb-btn" onclick="track('cta_click','engagement','navbar_admission')">Admission</a>
           <a href="javascript:void(0)" class="btn btn-glass nb-btn" onclick="openFeedbackPopup();track('feedback_click','engagement','navbar_feedback')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(255,214,10,0.25);color:#FFD60A">⭐ Feedback</a>
+          <a href="study.html" class="btn nb-btn nb-study-btn" onclick="track('study_click','engagement','navbar_study')" style="background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:none;font-size:.73rem;padding:8px 13px;box-shadow:0 0 16px rgba(168,85,247,0.3)">📚 Notes</a>
         </div>
       </div>
     </div>
@@ -2245,6 +2246,121 @@ input,select,textarea{font-size:16px !important}
   </div>
 </section>
 
+<!-- STUDY MATERIAL MODAL -->
+<div class="modal-overlay" id="studyModal" onclick="handleStudyOverlayClick(event)">
+  <div class="modal-box sm-modal-box">
+
+    <!-- SCREEN: LOGIN -->
+    <div id="smScreen-login">
+      <div class="modal-top">
+        <div class="mt-text"><div class="mt">📚 Study Material</div><div class="ms">Login to access your notes</div></div>
+        <button class="modal-close" onclick="closeStudyModal()">✕</button>
+      </div>
+      <div style="padding:20px 24px 28px">
+        <div class="sm-field">
+          <label>Username</label>
+          <input type="text" id="sm_login_username" placeholder="Enter your username" autocomplete="username">
+        </div>
+        <div class="sm-field">
+          <label>Password</label>
+          <input type="password" id="sm_login_password" placeholder="Enter your password" autocomplete="current-password">
+        </div>
+        <div class="sm-error" id="sm_login_error"></div>
+        <button class="btn btn-block" style="margin-top:4px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:none" onclick="smLogin()">Login</button>
+        <div style="text-align:center;margin-top:14px">
+          <button class="sm-link" onclick="smShowScreen('forgot')">Forgot Password?</button>
+        </div>
+        <hr class="sm-divider">
+        <p style="text-align:center;font-size:.82rem;color:var(--txt3);margin-bottom:12px">Don't have an account?</p>
+        <button class="btn btn-block" onclick="smShowScreen('signup')" style="background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;font-weight:700;border:none">Create Account</button>
+      </div>
+    </div>
+
+    <!-- SCREEN: SIGNUP -->
+    <div id="smScreen-signup" style="display:none">
+      <div class="modal-top">
+        <div class="mt-text"><div class="mt">✨ Create Account</div><div class="ms">Sign up to access study material</div></div>
+        <button class="modal-close" onclick="closeStudyModal()">✕</button>
+      </div>
+      <div style="padding:20px 24px 28px">
+        <div class="sm-field">
+          <label>Username <span class="req">*</span></label>
+          <input type="text" id="sm_su_username" placeholder="Choose a username" autocomplete="username">
+        </div>
+        <div class="sm-field">
+          <label>Mobile Number <span class="req">*</span></label>
+          <input type="tel" id="sm_su_phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+        </div>
+        <div class="sm-field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="sm_su_email" placeholder="Your email address" autocomplete="email">
+        </div>
+        <div class="sm-field">
+          <label>Password <span class="req">*</span></label>
+          <input type="password" id="sm_su_password" placeholder="Min 6 characters" autocomplete="new-password">
+        </div>
+        <div class="sm-field">
+          <label>Confirm Password <span class="req">*</span></label>
+          <input type="password" id="sm_su_confirm" placeholder="Re-enter password" autocomplete="new-password">
+        </div>
+        <div class="sm-error" id="sm_signup_error"></div>
+        <button class="btn btn-block" style="margin-top:4px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:none" onclick="smSignup()">Sign Up</button>
+        <div style="text-align:center;margin-top:14px">
+          <button class="sm-link" onclick="smShowScreen('login')">← Back to Login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN: FORGOT PASSWORD -->
+    <div id="smScreen-forgot" style="display:none">
+      <div class="modal-top">
+        <div class="mt-text"><div class="mt">🔑 Reset Password</div><div class="ms">OTP will be sent to your mobile</div></div>
+        <button class="modal-close" onclick="closeStudyModal()">✕</button>
+      </div>
+      <div style="padding:20px 24px 28px">
+        <div class="sm-field">
+          <label>Registered Mobile Number</label>
+          <input type="tel" id="sm_forgot_phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+        </div>
+        <div id="sm_otp_section" style="display:none">
+          <div class="sm-field">
+            <label>OTP</label>
+            <input type="number" id="sm_forgot_otp" placeholder="6-digit OTP">
+          </div>
+          <div class="sm-field">
+            <label>New Password</label>
+            <input type="password" id="sm_forgot_newpass" placeholder="Min 6 characters">
+          </div>
+        </div>
+        <div class="sm-error" id="sm_forgot_error"></div>
+        <button class="btn btn-block" id="sm_forgot_btn" onclick="smForgotSendOTP()" style="margin-top:4px;background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;font-weight:700;border:none">Send OTP</button>
+        <div style="text-align:center;margin-top:14px">
+          <button class="sm-link" onclick="smShowScreen('login')">← Back to Login</button>
+        </div>
+        <div id="recaptcha-container"></div>
+      </div>
+    </div>
+
+    <!-- SCREEN: PDF CONTENT (shown after login) -->
+    <div id="smScreen-content" style="display:none">
+      <div class="modal-top">
+        <div class="mt-text"><div class="mt">📚 Study Material</div><div class="ms" id="sm-enrolled-label">Your Notes & Worksheets</div></div>
+        <button class="modal-close" onclick="closeStudyModal()">✕</button>
+      </div>
+      <div class="sm-pdf-area">
+        <div class="sm-user-bar">
+          <div class="sm-welcome">Welcome, <strong id="study-username">Student</strong>! 👋</div>
+          <button class="btn btn-glass" style="font-size:.72rem;padding:6px 14px" onclick="smLogout()">Logout</button>
+        </div>
+        <div id="sm-pdf-content">
+          <!-- Dynamically inserted by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">Jethani's <span>Classes</span></div>
@@ -2376,6 +2492,11 @@ function sendToWhatsApp(){
   var img = new Image();
   img.src = SHEET_URL + '?' + params.toString();
 
+  /* ── FIRESTORE: Save admission for Study Material matching ── */
+  if(typeof window.saveAdmissionToFirestore === 'function'){
+    window.saveAdmissionToFirestore(p, sub, n);
+  }
+
   var wm="ADMISSION ENQUIRY\n\nName: "+n+"\nClass: "+s+"\nAge: "+a+"\nPhone: "+p+"\nSubject: "+sub;
   setTimeout(()=>window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank'),600);
 }
@@ -2458,5 +2579,341 @@ function sendToWhatsApp(){
 })();
 
 </script>
+
+<!-- ═══ FIREBASE SDK ═══ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber, updatePassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzd1rRibO_fEoBOmq94vhcKmsSo91-W24",
+  authDomain: "jethaniclasses-dad3a.firebaseapp.com",
+  projectId: "jethaniclasses-dad3a",
+  storageBucket: "jethaniclasses-dad3a.firebasestorage.app",
+  messagingSenderId: "918008409496",
+  appId: "1:918008409496:web:ae1ffc6885a5f7ce43cfed",
+  measurementId: "G-609XVF92JJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ── SUBJECTS DATA (placeholder PDFs) ──
+const SUBJECTS_DATA = {
+  'Vedic Mathematics': [
+    { title: 'Vedic Maths — Chapter 1', desc: 'Introduction & Basic Tricks', free: true, url: '#' },
+    { title: 'Vedic Maths — Chapter 2', desc: 'Multiplication Shortcuts', free: true, url: '#' },
+    { title: 'Vedic Maths — Chapter 3', desc: 'Division Tricks', free: false, url: '#' },
+    { title: 'Vedic Maths — Chapter 4', desc: 'Squares & Cubes', free: false, url: '#' },
+  ],
+  'English Speaking': [
+    { title: 'English Speaking — Basics', desc: 'Common phrases & sentence patterns', free: true, url: '#' },
+    { title: 'English Speaking — Intermediate', desc: 'Conversation skills', free: true, url: '#' },
+    { title: 'English Speaking — Advanced', desc: 'Fluency & Grammar', free: false, url: '#' },
+  ],
+  'Computer Classes': [
+    { title: 'Computer Basics — Part 1', desc: 'Hardware & Software', free: true, url: '#' },
+    { title: 'Computer Basics — Part 2', desc: 'MS Office Introduction', free: true, url: '#' },
+    { title: 'Computer Basics — Part 3', desc: 'Internet & Email', free: false, url: '#' },
+  ],
+  'Artificial Intelligence (AI)': [
+    { title: 'AI for Beginners', desc: 'What is AI?', free: true, url: '#' },
+    { title: 'AI Tools & Applications', desc: 'Practical AI tools', free: true, url: '#' },
+    { title: 'AI Projects', desc: 'Hands-on projects', free: false, url: '#' },
+  ],
+  'Programming (Python/C/C++)': [
+    { title: 'Python Basics', desc: 'Variables, loops, functions', free: true, url: '#' },
+    { title: 'Python Intermediate', desc: 'Lists, dicts, OOP', free: false, url: '#' },
+  ],
+  'Phonics': [
+    { title: 'Phonics — Phase 1-2', desc: '42 sounds introduction', free: true, url: '#' },
+    { title: 'Phonics — Phase 3-4', desc: 'Blending & reading', free: true, url: '#' },
+    { title: 'Phonics — Phase 5-8', desc: 'Advanced phonics', free: false, url: '#' },
+  ]
+};
+
+// ── SAVE TO FIRESTORE (called from admission form) ──
+window.saveAdmissionToFirestore = async function(phone, subject, name) {
+  try {
+    const docRef = doc(db, 'admissions', phone);
+    await setDoc(docRef, { phone, subject, name, createdAt: new Date().toISOString() }, { merge: true });
+  } catch(e) { console.log('Firestore save:', e.message); }
+};
+
+// ── AUTH STATE CHECK ──
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // User is logged in — show study section
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      showStudySection(data);
+    }
+  }
+});
+
+// ── SHOW STUDY CONTENT INSIDE POPUP ──
+function showStudySection(userData) {
+  document.getElementById('study-username').textContent = userData.username || 'Student';
+  smShowScreen('content');
+
+  if (userData.enrolledSubject) {
+    document.getElementById('sm-enrolled-label').textContent = 'Enrolled: ' + userData.enrolledSubject;
+    showEnrolledContent(userData.enrolledSubject);
+  } else {
+    document.getElementById('sm-enrolled-label').textContent = 'Free Sample Notes';
+    showVisitorContent();
+  }
+}
+
+// ── SUBJECT COLOR MAP ──
+const SUBJECT_CLASSES = {
+  'Vedic Mathematics': 'math',
+  'English Speaking': 'eng',
+  'Computer Classes': 'comp',
+  'Artificial Intelligence (AI)': 'ai',
+  'Programming (Python/C/C++)': 'prog',
+  'Phonics': 'phon'
+};
+
+// ── COLOR MAP ──
+const SUBJECT_COLORS = {
+  'Vedic Mathematics':            {bg:'rgba(255,214,10,.08)', border:'rgba(255,214,10,.25)', hover:'rgba(255,214,10,.2)', color:'#FFD60A'},
+  'English Speaking':             {bg:'rgba(0,229,255,.08)',  border:'rgba(0,229,255,.25)',  hover:'rgba(0,229,255,.2)',  color:'#00E5FF'},
+  'Computer Classes':             {bg:'rgba(168,85,247,.08)', border:'rgba(168,85,247,.25)', hover:'rgba(168,85,247,.2)', color:'#A855F7'},
+  'Artificial Intelligence (AI)':{bg:'rgba(0,255,136,.08)',  border:'rgba(0,255,136,.25)',  hover:'rgba(0,255,136,.2)',  color:'#00FF88'},
+  'Programming (Python/C/C++)':  {bg:'rgba(0,180,216,.08)',  border:'rgba(0,180,216,.25)',  hover:'rgba(0,180,216,.2)',  color:'#00B4D8'},
+  'Phonics':                      {bg:'rgba(255,45,120,.08)', border:'rgba(255,45,120,.25)', hover:'rgba(255,45,120,.2)', color:'#FF2D78'}
+};
+
+// ── SHOW ENROLLED CONTENT ──
+function showEnrolledContent(subject) {
+  const container = document.getElementById('sm-pdf-content');
+  const notes = SUBJECTS_DATA[subject] || [];
+  const c = SUBJECT_COLORS[subject] || SUBJECT_COLORS['Computer Classes'];
+
+  const titleHtml = `<div style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;color:#E8EEFF;margin-bottom:14px;margin-top:4px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">📘 ${subject}</div>`;
+
+  const cardsHtml = notes.map(n => `
+    <div style="display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:14px;background:${c.bg};border:1px solid ${c.border};backdrop-filter:blur(8px);transition:all .25s">
+      <div style="font-size:1.5rem">${n.free ? '📄' : '🔒'}</div>
+      <div style="font-size:.83rem;font-weight:700;color:#E8EEFF;line-height:1.3">${n.title}</div>
+      <div style="font-size:.72rem;color:rgba(232,238,255,.5);line-height:1.4">${n.desc}</div>
+      <span style="font-size:.62rem;font-weight:800;padding:2px 9px;border-radius:20px;display:inline-block;width:fit-content;background:${n.free ? 'rgba(0,255,136,.15)' : 'rgba(255,107,53,.15)'};color:${n.free ? '#00FF88' : '#FF6B35'}">${n.free ? 'FREE' : 'PREMIUM'}</span>
+      ${n.free
+        ? `<a href="${n.url}" style="margin-top:auto;font-size:.75rem;padding:8px 14px;border-radius:8px;font-weight:700;border:none;background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;text-align:center;text-decoration:none;display:inline-block" onclick="track('pdf_download','study','${n.title.replace(/ /g,'_')}')">⬇ Download PDF</a>`
+        : `<button style="margin-top:auto;font-size:.75rem;padding:8px 14px;border-radius:8px;font-weight:700;cursor:not-allowed;opacity:.5;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(232,238,255,.5)" disabled>🔒 Coming Soon</button>`
+      }
+    </div>`).join('');
+
+  container.innerHTML = titleHtml + `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">${cardsHtml}</div>`;
+}
+
+// ── SHOW VISITOR CONTENT ──
+function showVisitorContent() {
+  const container = document.getElementById('sm-pdf-content');
+  const cardStyle = (bg, border) => `display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:14px;background:${bg};border:1px solid ${border};backdrop-filter:blur(8px)`;
+  const freeBtn = (url, key) => `<a href="${url}" style="margin-top:auto;font-size:.75rem;padding:8px 14px;border-radius:8px;font-weight:700;border:none;background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;text-align:center;text-decoration:none;display:inline-block" onclick="track('pdf_download','study','${key}')">⬇ Download PDF</a>`;
+  const lockBtn = () => `<button style="margin-top:auto;font-size:.75rem;padding:8px 14px;border-radius:8px;cursor:not-allowed;opacity:.5;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(232,238,255,.5);font-weight:700" disabled>🔒 Coming Soon</button>`;
+  const freeBadge = () => `<span style="font-size:.62rem;font-weight:800;padding:2px 9px;border-radius:20px;display:inline-block;width:fit-content;background:rgba(0,255,136,.15);color:#00FF88">FREE</span>`;
+  const lockBadge = () => `<span style="font-size:.62rem;font-weight:800;padding:2px 9px;border-radius:20px;display:inline-block;width:fit-content;background:rgba(255,107,53,.15);color:#FF6B35">PREMIUM</span>`;
+
+  container.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+      <div style="${cardStyle('rgba(255,214,10,.08)','rgba(255,214,10,.25)')}">
+        <div style="font-size:1.5rem">📄</div>
+        <div style="font-size:.83rem;font-weight:700;color:#E8EEFF;line-height:1.3">Vedic Maths — Introduction</div>
+        <div style="font-size:.72rem;color:rgba(232,238,255,.5)">Basic tricks and concepts for beginners</div>
+        ${freeBadge()}
+        ${freeBtn('#','vedic_intro_visitor')}
+      </div>
+      <div style="${cardStyle('rgba(0,229,255,.08)','rgba(0,229,255,.25)')}">
+        <div style="font-size:1.5rem">📄</div>
+        <div style="font-size:.83rem;font-weight:700;color:#E8EEFF;line-height:1.3">English Speaking — Basics</div>
+        <div style="font-size:.72rem;color:rgba(232,238,255,.5)">Common phrases & sentence patterns</div>
+        ${freeBadge()}
+        ${freeBtn('#','english_intro_visitor')}
+      </div>
+      <div style="${cardStyle('rgba(168,85,247,.08)','rgba(168,85,247,.25)')}">
+        <div style="font-size:1.5rem">🔒</div>
+        <div style="font-size:.83rem;font-weight:700;color:#E8EEFF;line-height:1.3">Computer Basics — Full Notes</div>
+        <div style="font-size:.72rem;color:rgba(232,238,255,.5)">Complete notes — enroll to access</div>
+        ${lockBadge()}
+        ${lockBtn()}
+      </div>
+      <div style="${cardStyle('rgba(0,255,136,.08)','rgba(0,255,136,.25)')}">
+        <div style="font-size:1.5rem">🔒</div>
+        <div style="font-size:.83rem;font-weight:700;color:#E8EEFF;line-height:1.3">AI for Beginners</div>
+        <div style="font-size:.72rem;color:rgba(232,238,255,.5)">Enroll in AI course to access</div>
+        ${lockBadge()}
+        ${lockBtn()}
+      </div>
+    </div>`;
+}
+
+// ── OPEN STUDY MATERIAL ──
+window.openStudyMaterial = async function() {
+  document.getElementById('studyModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const user = auth.currentUser;
+  if (user) {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (userDoc.exists()) { showStudySection(userDoc.data()); return; }
+  }
+  smShowScreen('login');
+};
+
+// ── CLOSE MODAL ──
+window.closeStudyModal = function() {
+  document.getElementById('studyModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.handleStudyOverlayClick = function(e) {
+  if (e.target === document.getElementById('studyModal')) closeStudyModal();
+};
+
+// ── SWITCH TABS ──
+window.smShowScreen = function(screen) {
+  ['login','signup','forgot','content'].forEach(s => {
+    const el = document.getElementById('smScreen-' + s);
+    if(el) el.style.display = s === screen ? 'block' : 'none';
+  });
+};
+
+// ── SIGNUP ──
+window.smSignup = async function() {
+  const username = document.getElementById('sm_su_username').value.trim();
+  const phone = document.getElementById('sm_su_phone').value.trim();
+  const email = document.getElementById('sm_su_email').value.trim();
+  const password = document.getElementById('sm_su_password').value;
+  const confirm = document.getElementById('sm_su_confirm').value;
+  const errEl = document.getElementById('sm_signup_error');
+  errEl.style.display = 'none';
+
+  if (!username || !phone || !email || !password || !confirm) { showErr(errEl, 'Please fill all fields.'); return; }
+  if (!/^\d{10}$/.test(phone)) { showErr(errEl, 'Enter valid 10-digit mobile number.'); return; }
+  if (password !== confirm) { showErr(errEl, 'Passwords do not match.'); return; }
+  if (password.length < 6) { showErr(errEl, 'Password must be at least 6 characters.'); return; }
+
+  // Check username unique
+  const usernameQuery = query(collection(db, 'users'), where('username', '==', username));
+  const existing = await getDocs(usernameQuery);
+  if (!existing.empty) { showErr(errEl, 'Username already taken. Please choose another.'); return; }
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = cred.user.uid;
+
+    // Check if this phone was in admission form (enrolled student)
+    const admDoc = await getDoc(doc(db, 'admissions', phone));
+    let enrolledSubject = null;
+    if (admDoc.exists()) { enrolledSubject = admDoc.data().subject; }
+
+    // Save user to Firestore
+    await setDoc(doc(db, 'users', uid), {
+      username, phone, email,
+      enrolledSubject: enrolledSubject || null,
+      isEnrolled: !!enrolledSubject,
+      createdAt: new Date().toISOString()
+    });
+
+    showStudySection({ username, enrolledSubject });
+  } catch(e) {
+    if (e.code === 'auth/email-already-in-use') showErr(errEl, 'Email already registered. Please login.');
+    else showErr(errEl, 'Signup failed: ' + e.message);
+  }
+};
+
+// ── LOGIN ──
+window.smLogin = async function() {
+  const username = document.getElementById('sm_login_username').value.trim();
+  const password = document.getElementById('sm_login_password').value;
+  const errEl = document.getElementById('sm_login_error');
+  errEl.style.display = 'none';
+
+  if (!username || !password) { showErr(errEl, 'Please enter username and password.'); return; }
+
+  // Find email by username
+  const usernameQuery = query(collection(db, 'users'), where('username', '==', username));
+  const snap = await getDocs(usernameQuery);
+  if (snap.empty) { showErr(errEl, 'Username not found. Please sign up first.'); return; }
+
+  const userData = snap.docs[0].data();
+  try {
+    await signInWithEmailAndPassword(auth, userData.email, password);
+    showStudySection(userData);
+  } catch(e) {
+    showErr(errEl, 'Incorrect password. Please try again.');
+  }
+};
+
+// ── LOGOUT ──
+window.smLogout = async function() {
+  await signOut(auth);
+  document.getElementById('sm-pdf-content').innerHTML = '';
+  closeStudyModal();
+};
+
+// ── FORGOT PASSWORD — SEND OTP ──
+let confirmationResult = null;
+window.smForgotSendOTP = async function() {
+  const phone = document.getElementById('sm_forgot_phone').value.trim();
+  const errEl = document.getElementById('sm_forgot_error');
+  const otpSection = document.getElementById('sm_otp_section');
+  errEl.style.display = 'none';
+
+  if (!/^\d{10}$/.test(phone)) { showErr(errEl, 'Enter valid 10-digit mobile number.'); return; }
+
+  // Check if number exists in users
+  const q = query(collection(db, 'users'), where('phone', '==', phone));
+  const snap = await getDocs(q);
+  if (snap.empty) { showErr(errEl, 'Mobile number not registered. Please sign up first.'); return; }
+
+  try {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+    }
+    confirmationResult = await signInWithPhoneNumber(auth, '+91' + phone, window.recaptchaVerifier);
+    otpSection.style.display = 'block';
+    document.getElementById('sm_forgot_btn').textContent = 'Verify OTP & Reset';
+    document.getElementById('sm_forgot_btn').onclick = smForgotVerifyOTP;
+    showErr(errEl, 'OTP sent! Check your SMS.', 'var(--cyan)');
+  } catch(e) {
+    showErr(errEl, 'OTP send failed: ' + e.message);
+  }
+};
+
+// ── FORGOT PASSWORD — VERIFY OTP ──
+window.smForgotVerifyOTP = async function() {
+  const otp = document.getElementById('sm_forgot_otp').value.trim();
+  const newPass = document.getElementById('sm_forgot_newpass').value;
+  const errEl = document.getElementById('sm_forgot_error');
+  errEl.style.display = 'none';
+
+  if (!otp || !newPass) { showErr(errEl, 'Enter OTP and new password.'); return; }
+  if (newPass.length < 6) { showErr(errEl, 'Password must be at least 6 characters.'); return; }
+
+  try {
+    const cred = await confirmationResult.confirm(otp);
+    await updatePassword(cred.user, newPass);
+    showErr(errEl, 'Password reset successful! Please login.', 'var(--cyan)');
+    setTimeout(() => smShowScreen('login'), 2000);
+  } catch(e) {
+    showErr(errEl, 'Invalid OTP. Please try again.');
+  }
+};
+
+// ── HELPER: Show error ──
+function showErr(el, msg, color) {
+  el.textContent = msg;
+  el.style.color = color || '#ff6b6b';
+  el.style.display = 'block';
+}
+
+</script>
+
 </body>
 </html>
