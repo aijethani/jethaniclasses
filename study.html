@@ -439,36 +439,36 @@ window.showNotes = function(subject, enrolledSubject) {
     return item;
   }
 
-  // Free notes section
-  const freeCat = document.createElement('div');
-  freeCat.className = 'notes-category';
-  const freeTitle = document.createElement('div');
-  freeTitle.className = 'notes-category-title free';
-  freeTitle.textContent = '🆓 Free Notes';
-  freeCat.appendChild(freeTitle);
-  const freeList = document.createElement('div');
-  freeList.className = 'notes-list';
+  // "Paid Notes" section (was Free Notes data) — Coming Soon for everyone for now
+  const paidLinksCat = document.createElement('div');
+  paidLinksCat.className = 'notes-category';
+  const paidLinksTitle = document.createElement('div');
+  paidLinksTitle.className = 'notes-category-title free';
+  paidLinksTitle.textContent = '💰 Paid Notes';
+  paidLinksCat.appendChild(paidLinksTitle);
+  const paidLinksList = document.createElement('div');
+  paidLinksList.className = 'notes-list';
   if (freeNotes.length) {
-    freeNotes.forEach(n => freeList.appendChild(buildNoteItem(n, true)));
+    freeNotes.forEach(n => paidLinksList.appendChild(buildNoteItem(n, false)));
   } else {
-    freeList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No free notes yet — coming soon!</div>';
+    paidLinksList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No notes yet — coming soon!</div>';
   }
-  freeCat.appendChild(freeList);
-  section.appendChild(freeCat);
+  paidLinksCat.appendChild(paidLinksList);
+  section.appendChild(paidLinksCat);
 
-  // Premium notes section
+  // "Student Zone" section (was Premium Notes data) — free download for enrolled students only
   const paidCat = document.createElement('div');
   paidCat.className = 'notes-category';
   const paidTitle = document.createElement('div');
   paidTitle.className = 'notes-category-title paid';
-  paidTitle.textContent = '💎 Premium Notes';
+  paidTitle.textContent = '🎓 Student Zone';
   paidCat.appendChild(paidTitle);
   const paidList = document.createElement('div');
   paidList.className = 'notes-list';
   if (paidNotes.length) {
     paidNotes.forEach(n => paidList.appendChild(buildNoteItem(n, isEnrolled)));
   } else {
-    paidList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No premium notes yet — coming soon!</div>';
+    paidList.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;padding:10px 0">No notes yet — coming soon!</div>';
   }
   paidCat.appendChild(paidList);
   section.appendChild(paidCat);
@@ -568,6 +568,11 @@ window.doSignup = async function() {
     const uq = query(collection(db, 'users'), where('username', '==', username));
     const uSnap = await getDocs(uq);
     if (!uSnap.empty) { showErr(errEl, 'Username already taken. Please choose another.'); return; }
+
+    // Check mobile number unique
+    const pq = query(collection(db, 'users'), where('phone', '==', phone));
+    const pSnap = await getDocs(pq);
+    if (!pSnap.empty) { showErr(errEl, 'This mobile number is already registered. Please login or use a different number.'); return; }
 
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     const uid  = cred.user.uid;
