@@ -144,6 +144,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(7,11,20,0.85);backdrop-fil
   .subject-pill{font-size:.78rem;padding:12px 12px}
 }
 
+/* ── PASSWORD EYE ICON ── */
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-wrap input{padding-right:42px;width:100%}
+.pw-eye{position:absolute;right:13px;cursor:pointer;color:var(--txt3);font-size:1rem;user-select:none;transition:color .2s;background:none;border:none;padding:0;display:flex;align-items:center}
+.pw-eye:hover{color:var(--purple)}
 /* ── SCREENS ── */
 .screen{display:none}
 .screen.active{display:block}
@@ -649,6 +654,18 @@ window.saveAdmissionToFirestore = async function(phone, subject, name) {
   try {
     await setDoc(doc(db, 'admissions', phone), { phone, subject, name, createdAt: new Date().toISOString() }, { merge: true });
   } catch(e) { console.log('Firestore:', e.message); }
+};
+
+// ── PASSWORD TOGGLE ──
+window.togglePw = function(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁️';
+  }
 };
 
 </script>
