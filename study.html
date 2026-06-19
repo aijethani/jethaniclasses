@@ -197,7 +197,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(7,11,20,0.85);backdrop-fil
       </div>
       <div class="form-field">
         <label>Password</label>
-        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+        <div class="pw-wrap">
+          <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+          <button class="pw-eye" type="button" onclick="togglePw('login-password',this)" tabindex="-1">👁️</button>
+        </div>
       </div>
       <div class="form-error" id="login-error"></div>
       <button class="btn btn-purple" onclick="doLogin()">Login</button>
@@ -230,11 +233,17 @@ nav{position:sticky;top:0;z-index:200;background:rgba(7,11,20,0.85);backdrop-fil
       </div>
       <div class="form-field">
         <label>Password <span class="req">*</span></label>
-        <input type="password" id="su-password" placeholder="Minimum 6 characters" autocomplete="new-password">
+        <div class="pw-wrap">
+          <input type="password" id="su-password" placeholder="Minimum 6 characters" autocomplete="new-password">
+          <button class="pw-eye" type="button" onclick="togglePw('su-password',this)" tabindex="-1">👁️</button>
+        </div>
       </div>
       <div class="form-field">
         <label>Confirm Password <span class="req">*</span></label>
-        <input type="password" id="su-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+        <div class="pw-wrap">
+          <input type="password" id="su-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+          <button class="pw-eye" type="button" onclick="togglePw('su-confirm',this)" tabindex="-1">👁️</button>
+        </div>
       </div>
       <div class="form-error" id="signup-error"></div>
       <button class="btn btn-purple" onclick="doSignup()">Create Account</button>
