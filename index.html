@@ -2541,7 +2541,7 @@ function resetAdmissionForm(){
   var form = document.getElementById('admissionForm');
   var success = document.getElementById('formSuccess');
   var errMsg = document.getElementById('adm-error-msg');
-  if(form) form.style.display = '';
+  if(form){ form.style.display = ''; form.reset(); }
   if(success) success.style.display = 'none';
   if(errMsg) errMsg.style.display = 'none';
 }
