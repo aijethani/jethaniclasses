@@ -2474,15 +2474,6 @@ function feedbackImprove(){
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 /* ══ ADMISSION FORM → WHATSAPP ══ */
-function resetAdmissionForm(){
-  var form = document.getElementById('admissionForm');
-  var success = document.getElementById('formSuccess');
-  var errMsg = document.getElementById('adm-error-msg');
-  if(form) form.style.display = '';
-  if(success) success.style.display = 'none';
-  if(errMsg) errMsg.style.display = 'none';
-}
-
 async function sendToWhatsApp(){
   var n=document.getElementById('name').value.trim().slice(0,80),
       s=document.getElementById('standard').value,
@@ -2544,6 +2535,15 @@ function submitAdmissionForm(n, s, a, p, sub){
 
   var wm="ADMISSION ENQUIRY\n\nName: "+n+"\nClass: "+s+"\nAge: "+a+"\nPhone: "+p+"\nSubject: "+sub;
   setTimeout(()=>window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank'),600);
+}
+
+function resetAdmissionForm(){
+  var form = document.getElementById('admissionForm');
+  var success = document.getElementById('formSuccess');
+  var errMsg = document.getElementById('adm-error-msg');
+  if(form) form.style.display = '';
+  if(success) success.style.display = 'none';
+  if(errMsg) errMsg.style.display = 'none';
 }
 
 </script>
