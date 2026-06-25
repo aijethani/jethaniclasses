@@ -541,9 +541,8 @@ window.doLogin = async function() {
     loginAttempts = 0;
 
     // ── FRESH ADMISSION CHECK on every login ──
-    // If user signed up before filling admission form, update their enrolledSubject now
     const admSnap = await getDoc(doc(db, 'admissions', userData.phone));
-    if (admSnap.exists() && !userData.enrolledSubject) {
+    if (admSnap.exists()) {
       const enrolledSubject = admSnap.data().subject;
       await setDoc(doc(db, 'users', cred.user.uid), { enrolledSubject, isEnrolled: true }, { merge: true });
       userData.enrolledSubject = enrolledSubject;
