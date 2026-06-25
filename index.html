@@ -2541,9 +2541,20 @@ function resetAdmissionForm(){
   var form = document.getElementById('admissionForm');
   var success = document.getElementById('formSuccess');
   var errMsg = document.getElementById('adm-error-msg');
-  if(form){ form.style.display = ''; form.reset(); }
+  if(form) form.style.display = '';
   if(success) success.style.display = 'none';
   if(errMsg) errMsg.style.display = 'none';
+  // Clear all fields manually
+  var nameEl = document.getElementById('name');
+  var ageEl = document.getElementById('age');
+  var standardEl = document.getElementById('standard');
+  var subjectEl = document.getElementById('subject');
+  var phoneEl = document.getElementById('phone');
+  if(nameEl) nameEl.value = '';
+  if(ageEl) ageEl.value = '';
+  if(standardEl) standardEl.selectedIndex = 0;
+  if(subjectEl) subjectEl.selectedIndex = 0;
+  if(phoneEl) phoneEl.value = '';
 }
 
 </script>
