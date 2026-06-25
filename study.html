@@ -591,9 +591,12 @@ window.doSignup = async function() {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     const uid  = cred.user.uid;
 
-    // Check if enrolled (phone match in admissions)
+    // Check if enrolled (phone match in admissions) — check both key formats
+    let enrolledSubject = null;
     const admSnap = await getDoc(doc(db, 'admissions', phone));
-    const enrolledSubject = admSnap.exists() ? admSnap.data().subject : null;
+    if (admSnap.exists()) {
+      enrolledSubject = admSnap.data().subject;
+    }
 
     const userData = { username, phone, email, enrolledSubject: enrolledSubject || null, isEnrolled: !!enrolledSubject, createdAt: new Date().toISOString() };
     await setDoc(doc(db, 'users', uid), userData);
