@@ -2073,7 +2073,7 @@ input,select,textarea{font-size:16px !important}
                 <input type="tel" id="phone" placeholder="10-digit WhatsApp number" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" autocomplete="tel" required>
               </div>
               <div class="adm-submit-row">
-                <button type="button" onclick="sendToWhatsApp()" class="btn btn-orange btn-lg btn-block">
+                <button type="button" id="admissionSubmitBtn" onclick="sendToWhatsApp()" class="btn btn-orange btn-lg btn-block" disabled style="opacity:.6;cursor:not-allowed">
                   📋 &nbsp;Submit &amp; Confirm on WhatsApp
                 </button>
               </div>
@@ -2484,36 +2484,17 @@ function sendToWhatsApp(){
   if(isNaN(a)||a<4||a>70){alert('Please enter a valid age between 4 and 70.');return;}
 
   /* ── DUPLICATE ENROLLMENT CHECK (phone + subject) ── */
-  if(typeof window.checkDuplicateEnrollment === 'function'){
-    window.checkDuplicateEnrollment(p, sub).then(function(isDuplicate){
-      if(isDuplicate){
-        alert('You are already enrolled in ' + sub + '. Please login to access your study material, or choose a different subject.');
-        return;
-      }
-      submitAdmissionForm(n, s, a, p, sub);
-    });
-  } else {
-    // Retry until Firebase module loads (max 5 seconds)
-    var dupCheckAttempts = 0;
-    function retryDupCheck() {
-      if(typeof window.checkDuplicateEnrollment === 'function'){
-        window.checkDuplicateEnrollment(p, sub).then(function(isDuplicate){
-          if(isDuplicate){
-            alert('You are already enrolled in ' + sub + '. Please login to access your study material, or choose a different subject.');
-            return;
-          }
-          submitAdmissionForm(n, s, a, p, sub);
-        });
-      } else if(dupCheckAttempts < 10){
-        dupCheckAttempts++;
-        setTimeout(retryDupCheck, 500);
-      } else {
-        // Firebase didn't load — proceed anyway (fallback)
-        submitAdmissionForm(n, s, a, p, sub);
-      }
-    }
-    retryDupCheck();
+  if(typeof window.checkDuplicateEnrollment !== 'function'){
+    alert('Please wait a moment and try again.');
+    return;
   }
+  window.checkDuplicateEnrollment(p, sub).then(function(isDuplicate){
+    if(isDuplicate){
+      alert('You are already enrolled in ' + sub + '. Please login to access your study material, or choose a different subject.');
+      return;
+    }
+    submitAdmissionForm(n, s, a, p, sub);
+  });
 }
 
 function submitAdmissionForm(n, s, a, p, sub){
@@ -2677,6 +2658,12 @@ const SUBJECTS_DATA = {
 };
 
 // ── SAVE TO FIRESTORE (called from admission form) ──
+// Enable admission submit button when Firebase is ready
+(function enableAdmissionBtn() {
+  const btn = document.getElementById('admissionSubmitBtn');
+  if(btn){ btn.disabled = false; btn.style.opacity = ''; btn.style.cursor = ''; }
+})();
+
 window.checkDuplicateEnrollment = async function(phone, subject) {
   try {
     const admDoc = await getDoc(doc(db, 'admissions', phone + '_' + subject.replace(/[^a-zA-Z]/g, '')));
