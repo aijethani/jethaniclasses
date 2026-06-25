@@ -2673,13 +2673,17 @@ const SUBJECTS_DATA = {
 // ── SAVE TO FIRESTORE (called from admission form) ──
 window.checkDuplicateEnrollment = async function(phone, subject) {
   try {
+    // Check new format (phone+subject key)
     const admDoc = await getDoc(doc(db, 'admissions', phone + '_' + subject.replace(/[^a-zA-Z]/g, '')));
     if (admDoc.exists()) return true;
-    // Also check old format (phone only key with same subject)
+    // Check old format (phone only key)
     const oldDoc = await getDoc(doc(db, 'admissions', phone));
     if (oldDoc.exists() && oldDoc.data().subject === subject) return true;
     return false;
-  } catch(e) { return false; }
+  } catch(e) {
+    // On error — block submission to prevent duplicate
+    return true;
+  }
 };
 
 window.saveAdmissionToFirestore = async function(phone, subject, name) {
