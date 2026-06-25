@@ -1362,7 +1362,7 @@ input,select,textarea{font-size:16px !important}
         </a>
         <a href="#brochure" class="btn btn-glass nb-btn nb-brochure-btn" onclick="track('brochure_click','engagement','navbar_brochure')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(0,229,255,0.25);color:var(--cyan)">📄 Brochure</a>
         <div class="nb-cta-row">
-          <a href="#admission" class="btn btn-cyan nb-btn" onclick="track('cta_click','engagement','navbar_admission')">Admission</a>
+          <a href="#admission" class="btn btn-cyan nb-btn" onclick="resetAdmissionForm();track('cta_click','engagement','navbar_admission')">Admission</a>
           <a href="javascript:void(0)" class="btn btn-glass nb-btn" onclick="openFeedbackPopup();track('feedback_click','engagement','navbar_feedback')" style="font-size:.73rem;padding:8px 13px;border-color:rgba(255,214,10,0.25);color:#FFD60A">⭐ Feedback</a>
           <a href="study.html" class="btn nb-btn nb-study-btn" onclick="track('study_click','engagement','navbar_study')" style="background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;border:none;font-size:.73rem;padding:8px 13px;box-shadow:0 0 16px rgba(168,85,247,0.3)">📚 Notes</a>
         </div>
@@ -2474,6 +2474,15 @@ function feedbackImprove(){
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 /* ══ ADMISSION FORM → WHATSAPP ══ */
+function resetAdmissionForm(){
+  var form = document.getElementById('admissionForm');
+  var success = document.getElementById('formSuccess');
+  var errMsg = document.getElementById('adm-error-msg');
+  if(form) form.style.display = '';
+  if(success) success.style.display = 'none';
+  if(errMsg) errMsg.style.display = 'none';
+}
+
 async function sendToWhatsApp(){
   var n=document.getElementById('name').value.trim().slice(0,80),
       s=document.getElementById('standard').value,
