@@ -2482,6 +2482,22 @@ function sendToWhatsApp(){
   if(!n||!s||!p||!sub){alert('Please fill all required fields before submitting.');return;}
   if(!/^\d{10}$/.test(p)){alert('Please enter a valid 10-digit WhatsApp number.');return;}
   if(isNaN(a)||a<4||a>70){alert('Please enter a valid age between 4 and 70.');return;}
+
+  /* ── DUPLICATE ENROLLMENT CHECK (phone + subject) ── */
+  if(typeof window.checkDuplicateEnrollment === 'function'){
+    window.checkDuplicateEnrollment(p, sub).then(function(isDuplicate){
+      if(isDuplicate){
+        alert('You are already enrolled in ' + sub + '. Please login to access your study material, or choose a different subject.');
+        return;
+      }
+      submitAdmissionForm(n, s, a, p, sub);
+    });
+  } else {
+    submitAdmissionForm(n, s, a, p, sub);
+  }
+}
+
+function submitAdmissionForm(n, s, a, p, sub){
   track('admission_form_submit','lead',sub);
   document.getElementById('admissionForm').style.display='none';
   document.getElementById('formSuccess').style.display='block';
@@ -2493,9 +2509,16 @@ function sendToWhatsApp(){
   img.src = SHEET_URL + '?' + params.toString();
 
   /* ── FIRESTORE: Save admission for Study Material matching ── */
-  if(typeof window.saveAdmissionToFirestore === 'function'){
-    window.saveAdmissionToFirestore(p, sub, n);
+  var firestoreSaveAttempts = 0;
+  function tryFirestoreSave() {
+    if (typeof window.saveAdmissionToFirestore === 'function') {
+      window.saveAdmissionToFirestore(p, sub, n);
+    } else if (firestoreSaveAttempts < 10) {
+      firestoreSaveAttempts++;
+      setTimeout(tryFirestoreSave, 500); // retry every 500ms up to 5 seconds
+    }
   }
+  tryFirestoreSave();
 
   var wm="ADMISSION ENQUIRY\n\nName: "+n+"\nClass: "+s+"\nAge: "+a+"\nPhone: "+p+"\nSubject: "+sub;
   setTimeout(()=>window.open("https://wa.me/919028606929?text="+encodeURIComponent(wm),'_blank'),600);
@@ -2635,11 +2658,29 @@ const SUBJECTS_DATA = {
 };
 
 // ── SAVE TO FIRESTORE (called from admission form) ──
+window.checkDuplicateEnrollment = async function(phone, subject) {
+  try {
+    const admDoc = await getDoc(doc(db, 'admissions', phone + '_' + subject.replace(/[^a-zA-Z]/g, '')));
+    if (admDoc.exists()) return true;
+    // Also check old format (phone only key with same subject)
+    const oldDoc = await getDoc(doc(db, 'admissions', phone));
+    if (oldDoc.exists() && oldDoc.data().subject === subject) return true;
+    return false;
+  } catch(e) { return false; }
+};
+
 window.saveAdmissionToFirestore = async function(phone, subject, name) {
   try {
-    // Save to admissions collection
-    const docRef = doc(db, 'admissions', phone);
+    // Save to admissions collection — use phone+subject as key to support multiple subjects
+    const key = phone + '_' + subject.replace(/[^a-zA-Z]/g, '');
+    const docRef = doc(db, 'admissions', key);
     await setDoc(docRef, { phone, subject, name, createdAt: new Date().toISOString() }, { merge: true });
+    // Also save with phone-only key for backward compatibility (first subject)
+    const phoneDocRef = doc(db, 'admissions', phone);
+    const phoneDoc = await getDoc(phoneDocRef);
+    if (!phoneDoc.exists()) {
+      await setDoc(phoneDocRef, { phone, subject, name, createdAt: new Date().toISOString() });
+    }
 
     // Also update users collection if account already exists with this phone
     const usersQ = query(collection(db, 'users'), where('phone', '==', phone));
