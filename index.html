@@ -2493,7 +2493,26 @@ function sendToWhatsApp(){
       submitAdmissionForm(n, s, a, p, sub);
     });
   } else {
-    submitAdmissionForm(n, s, a, p, sub);
+    // Retry until Firebase module loads (max 5 seconds)
+    var dupCheckAttempts = 0;
+    function retryDupCheck() {
+      if(typeof window.checkDuplicateEnrollment === 'function'){
+        window.checkDuplicateEnrollment(p, sub).then(function(isDuplicate){
+          if(isDuplicate){
+            alert('You are already enrolled in ' + sub + '. Please login to access your study material, or choose a different subject.');
+            return;
+          }
+          submitAdmissionForm(n, s, a, p, sub);
+        });
+      } else if(dupCheckAttempts < 10){
+        dupCheckAttempts++;
+        setTimeout(retryDupCheck, 500);
+      } else {
+        // Firebase didn't load — proceed anyway (fallback)
+        submitAdmissionForm(n, s, a, p, sub);
+      }
+    }
+    retryDupCheck();
   }
 }
 
